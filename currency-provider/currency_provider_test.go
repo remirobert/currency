@@ -9,19 +9,19 @@ import (
 )
 
 type testJSONRequester struct {
-	Body []byte
-	Err  error
+	body []byte
+	err error
 }
 
 func (t *testJSONRequester) Get(url string) (body []byte, err error) {
-	return t.Body, t.Err
+	return t.body, t.err
 }
 
 func TestCurrencyProviderGetCurrencyWithError(t *testing.T) {
 	testErr := errors.New("error")
 	testRequester := &testJSONRequester{
-		Body:nil,
-		Err:testErr,
+		body:nil,
+		err:testErr,
 	}
 	currency, err := NewNetworkCurrencyProvider(testRequester).GetCurrency()
 	assert.Equal(t, err, testErr)
@@ -30,8 +30,8 @@ func TestCurrencyProviderGetCurrencyWithError(t *testing.T) {
 
 func TestCurrencyProviderGetCurrencyWithNoBody(t *testing.T) {
 	testRequester := &testJSONRequester{
-		Body:nil,
-		Err:nil,
+		body:nil,
+		err:nil,
 	}
 	currency, err := NewNetworkCurrencyProvider(testRequester).GetCurrency()
 	assert.NotNil(t, err)
@@ -42,8 +42,8 @@ func TestCurrencyProviderGetCurrencyWithInvalidBody(t *testing.T) {
 	invalidBytes := []byte(`invalid json`)
 
 	testRequester := &testJSONRequester{
-		Body:invalidBytes,
-		Err:nil,
+		body:invalidBytes,
+		err:nil,
 	}
 	currency, err := NewNetworkCurrencyProvider(testRequester).GetCurrency()
 	assert.NotNil(t, err)
@@ -55,8 +55,8 @@ func TestCurrencyProviderGetCurrencyWithValidBody(t *testing.T) {
 	bytes, _ := json.Marshal(c)
 
 	testRequester := &testJSONRequester{
-		Body:bytes,
-		Err:nil,
+		body:bytes,
+		err:nil,
 	}
 	currency, err := NewNetworkCurrencyProvider(testRequester).GetCurrency()
 	assert.Nil(t, err)
