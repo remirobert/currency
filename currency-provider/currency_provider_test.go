@@ -24,6 +24,7 @@ func TestCurrencyProviderGetCurrencyWithError(t *testing.T) {
 		err:testErr,
 	}
 	currency, err := NewNetworkCurrencyProvider(testRequester).GetCurrency()
+
 	assert.Equal(t, err, testErr)
 	assert.Nil(t, currency)
 }
@@ -34,18 +35,19 @@ func TestCurrencyProviderGetCurrencyWithNoBody(t *testing.T) {
 		err:nil,
 	}
 	currency, err := NewNetworkCurrencyProvider(testRequester).GetCurrency()
+
 	assert.NotNil(t, err)
 	assert.Nil(t, currency)
 }
 
 func TestCurrencyProviderGetCurrencyWithInvalidBody(t *testing.T) {
 	invalidBytes := []byte(`invalid json`)
-
 	testRequester := &testJSONRequester{
 		body:invalidBytes,
 		err:nil,
 	}
 	currency, err := NewNetworkCurrencyProvider(testRequester).GetCurrency()
+
 	assert.NotNil(t, err)
 	assert.Nil(t, currency)
 }
@@ -53,12 +55,12 @@ func TestCurrencyProviderGetCurrencyWithInvalidBody(t *testing.T) {
 func TestCurrencyProviderGetCurrencyWithValidBody(t *testing.T) {
 	c := Currency{Source:"source"}
 	bytes, _ := json.Marshal(c)
-
 	testRequester := &testJSONRequester{
 		body:bytes,
 		err:nil,
 	}
 	currency, err := NewNetworkCurrencyProvider(testRequester).GetCurrency()
+
 	assert.Nil(t, err)
 	assert.Equal(t, *currency, c)
 }

@@ -37,6 +37,7 @@ func TestNetworkRequesterWithError(t *testing.T) {
 	testErr := errors.New("error")
 	requester := NetworkRequester{Client: &testNetworkClient{err: testErr}}
 	bytes, err := requester.Get("")
+
 	assert.NotNil(t, err)
 	assert.Equal(t, err, testErr)
 	assert.Nil(t, bytes)
@@ -46,6 +47,7 @@ func TestNetworkRequesterWithNoBody(t *testing.T) {
 	testNetClient := &testNetworkClient{bytes: nil}
 	requester := NetworkRequester{testNetClient}
 	bytes, err := requester.Get("")
+
 	assert.NotNil(t, err)
 	assert.Nil(t, bytes)
 }
