@@ -1,179 +1,185 @@
 package currency_provider
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"gopkg.in/mgo.v2/bson"
+	"time"
+)
 
 type Quotes struct {
-	USDAED json.Number `json:"USDAED,omitempty"`
-	USDAFN json.Number `json:"USDAFN,omitempty"`
-	USDALL json.Number `json:"USDALL,omitempty"`
-	USDAMD json.Number `json:"USDAMD,omitempty"`
-	USDANG json.Number `json:"USDANG,omitempty"`
-	USDAOA json.Number `json:"USDAOA,omitempty"`
-	USDARS json.Number `json:"USDARS,omitempty"`
-	USDAUD json.Number `json:"USDAUD,omitempty"`
-	USDAWG json.Number `json:"USDAWG,omitempty"`
-	USDAZN json.Number `json:"USDAZN,omitempty"`
-	USDBAM json.Number `json:"USDBAM,omitempty"`
-	USDBBD json.Number `json:"USDBBD,omitempty"`
-	USDBDT json.Number `json:"USDBDT,omitempty"`
-	USDBGN json.Number `json:"USDBGN,omitempty"`
-	USDBHD json.Number `json:"USDBHD,omitempty"`
-	USDBIF json.Number `json:"USDBIF,omitempty"`
-	USDBMD json.Number `json:"USDBMD,omitempty"`
-	USDBND json.Number `json:"USDBND,omitempty"`
-	USDBOB json.Number `json:"USDBOB,omitempty"`
-	USDBRL json.Number `json:"USDBRL,omitempty"`
-	USDBSD json.Number `json:"USDBSD,omitempty"`
-	USDBTC json.Number `json:"USDBTC,omitempty"`
-	USDBTN json.Number `json:"USDBTN,omitempty"`
-	USDBWP json.Number `json:"USDBWP,omitempty"`
-	USDBYN json.Number `json:"USDBYN,omitempty"`
-	USDBYR json.Number `json:"USDBYR,omitempty"`
-	USDBZD json.Number `json:"USDBZD,omitempty"`
-	USDCAD json.Number `json:"USDCAD,omitempty"`
-	USDCDF json.Number `json:"USDCDF,omitempty"`
-	USDCHF json.Number `json:"USDCHF,omitempty"`
-	USDCLF json.Number `json:"USDCLF,omitempty"`
-	USDCLP json.Number `json:"USDCLP,omitempty"`
-	USDCNY json.Number `json:"USDCNY,omitempty"`
-	USDCOP json.Number `json:"USDCOP,omitempty"`
-	USDCRC json.Number `json:"USDCRC,omitempty"`
-	USDCUC json.Number `json:"USDCUC,omitempty"`
-	USDCUP json.Number `json:"USDCUP,omitempty"`
-	USDCVE json.Number `json:"USDCVE,omitempty"`
-	USDCZK json.Number `json:"USDCZK,omitempty"`
-	USDDJF json.Number `json:"USDDJF,omitempty"`
-	USDDKK json.Number `json:"USDDKK,omitempty"`
-	USDDOP json.Number `json:"USDDOP,omitempty"`
-	USDDZD json.Number `json:"USDDZD,omitempty"`
-	USDEGP json.Number `json:"USDEGP,omitempty"`
-	USDERN json.Number `json:"USDERN,omitempty"`
-	USDETB json.Number `json:"USDETB,omitempty"`
-	USDEUR json.Number `json:"USDEUR,omitempty"`
-	USDFJD json.Number `json:"USDFJD,omitempty"`
-	USDFKP json.Number `json:"USDFKP,omitempty"`
-	USDGBP json.Number `json:"USDGBP,omitempty"`
-	USDGEL json.Number `json:"USDGEL,omitempty"`
-	USDGGP json.Number `json:"USDGGP,omitempty"`
-	USDGHS json.Number `json:"USDGHS,omitempty"`
-	USDGIP json.Number `json:"USDGIP,omitempty"`
-	USDGMD json.Number `json:"USDGMD,omitempty"`
-	USDGNF json.Number `json:"USDGNF,omitempty"`
-	USDGTQ json.Number `json:"USDGTQ,omitempty"`
-	USDGYD json.Number `json:"USDGYD,omitempty"`
-	USDHKD json.Number `json:"USDHKD,omitempty"`
-	USDHNL json.Number `json:"USDHNL,omitempty"`
-	USDHRK json.Number `json:"USDHRK,omitempty"`
-	USDHTG json.Number `json:"USDHTG,omitempty"`
-	USDHUF json.Number `json:"USDHUF,omitempty"`
-	USDIDR json.Number `json:"USDIDR,omitempty"`
-	USDILS json.Number `json:"USDILS,omitempty"`
-	USDIMP json.Number `json:"USDIMP,omitempty"`
-	USDINR json.Number `json:"USDINR,omitempty"`
-	USDIQD json.Number `json:"USDIQD,omitempty"`
-	USDIRR json.Number `json:"USDIRR,omitempty"`
-	USDISK json.Number `json:"USDISK,omitempty"`
-	USDJEP json.Number `json:"USDJEP,omitempty"`
-	USDJMD json.Number `json:"USDJMD,omitempty"`
-	USDJOD json.Number `json:"USDJOD,omitempty"`
-	USDJPY json.Number `json:"USDJPY,omitempty"`
-	USDKES json.Number `json:"USDKES,omitempty"`
-	USDKGS json.Number `json:"USDKGS,omitempty"`
-	USDKHR json.Number `json:"USDKHR,omitempty"`
-	USDKMF json.Number `json:"USDKMF,omitempty"`
-	USDKPW json.Number `json:"USDKPW,omitempty"`
-	USDKRW json.Number `json:"USDKRW,omitempty"`
-	USDKWD json.Number `json:"USDKWD,omitempty"`
-	USDKYD json.Number `json:"USDKYD,omitempty"`
-	USDKZT json.Number `json:"USDKZT,omitempty"`
-	USDLAK json.Number `json:"USDLAK,omitempty"`
-	USDLBP json.Number `json:"USDLBP,omitempty"`
-	USDLKR json.Number `json:"USDLKR,omitempty"`
-	USDLRD json.Number `json:"USDLRD,omitempty"`
-	USDLSL json.Number `json:"USDLSL,omitempty"`
-	USDLTL json.Number `json:"USDLTL,omitempty"`
-	USDLVL json.Number `json:"USDLVL,omitempty"`
-	USDLYD json.Number `json:"USDLYD,omitempty"`
-	USDMAD json.Number `json:"USDMAD,omitempty"`
-	USDMDL json.Number `json:"USDMDL,omitempty"`
-	USDMGA json.Number `json:"USDMGA,omitempty"`
-	USDMKD json.Number `json:"USDMKD,omitempty"`
-	USDMMK json.Number `json:"USDMMK,omitempty"`
-	USDMNT json.Number `json:"USDMNT,omitempty"`
-	USDMOP json.Number `json:"USDMOP,omitempty"`
-	USDMRO json.Number `json:"USDMRO,omitempty"`
-	USDMUR json.Number `json:"USDMUR,omitempty"`
-	USDMVR json.Number `json:"USDMVR,omitempty"`
-	USDMWK json.Number `json:"USDMWK,omitempty"`
-	USDMXN json.Number `json:"USDMXN,omitempty"`
-	USDMYR json.Number `json:"USDMYR,omitempty"`
-	USDMZN json.Number `json:"USDMZN,omitempty"`
-	USDNAD json.Number `json:"USDNAD,omitempty"`
-	USDNGN json.Number `json:"USDNGN,omitempty"`
-	USDNIO json.Number `json:"USDNIO,omitempty"`
-	USDNOK json.Number `json:"USDNOK,omitempty"`
-	USDNPR json.Number `json:"USDNPR,omitempty"`
-	USDNZD json.Number `json:"USDNZD,omitempty"`
-	USDOMR json.Number `json:"USDOMR,omitempty"`
-	USDPAB json.Number `json:"USDPAB,omitempty"`
-	USDPEN json.Number `json:"USDPEN,omitempty"`
-	USDPGK json.Number `json:"USDPGK,omitempty"`
-	USDPHP json.Number `json:"USDPHP,omitempty"`
-	USDPKR json.Number `json:"USDPKR,omitempty"`
-	USDPLN json.Number `json:"USDPLN,omitempty"`
-	USDPYG json.Number `json:"USDPYG,omitempty"`
-	USDQAR json.Number `json:"USDQAR,omitempty"`
-	USDRON json.Number `json:"USDRON,omitempty"`
-	USDRSD json.Number `json:"USDRSD,omitempty"`
-	USDRUB json.Number `json:"USDRUB,omitempty"`
-	USDRWF json.Number `json:"USDRWF,omitempty"`
-	USDSAR json.Number `json:"USDSAR,omitempty"`
-	USDSBD json.Number `json:"USDSBD,omitempty"`
-	USDSCR json.Number `json:"USDSCR,omitempty"`
-	USDSDG json.Number `json:"USDSDG,omitempty"`
-	USDSEK json.Number `json:"USDSEK,omitempty"`
-	USDSGD json.Number `json:"USDSGD,omitempty"`
-	USDSHP json.Number `json:"USDSHP,omitempty"`
-	USDSLL json.Number `json:"USDSLL,omitempty"`
-	USDSOS json.Number `json:"USDSOS,omitempty"`
-	USDSRD json.Number `json:"USDSRD,omitempty"`
-	USDSTD json.Number `json:"USDSTD,omitempty"`
-	USDSVC json.Number `json:"USDSVC,omitempty"`
-	USDSYP json.Number `json:"USDSYP,omitempty"`
-	USDSZL json.Number `json:"USDSZL,omitempty"`
-	USDTHB json.Number `json:"USDTHB,omitempty"`
-	USDTJS json.Number `json:"USDTJS,omitempty"`
-	USDTMT json.Number `json:"USDTMT,omitempty"`
-	USDTND json.Number `json:"USDTND,omitempty"`
-	USDTOP json.Number `json:"USDTOP,omitempty"`
-	USDTRY json.Number `json:"USDTRY,omitempty"`
-	USDTTD json.Number `json:"USDTTD,omitempty"`
-	USDTWD json.Number `json:"USDTWD,omitempty"`
-	USDTZS json.Number `json:"USDTZS,omitempty"`
-	USDUAH json.Number `json:"USDUAH,omitempty"`
-	USDUGX json.Number `json:"USDUGX,omitempty"`
-	USDUSD json.Number `json:"USDUSD,omitempty"`
-	USDUYU json.Number `json:"USDUYU,omitempty"`
-	USDUZS json.Number `json:"USDUZS,omitempty"`
-	USDVEF json.Number `json:"USDVEF,omitempty"`
-	USDVND json.Number `json:"USDVND,omitempty"`
-	USDVUV json.Number `json:"USDVUV,omitempty"`
-	USDWST json.Number `json:"USDWST,omitempty"`
-	USDXAF json.Number `json:"USDXAF,omitempty"`
-	USDXAG json.Number `json:"USDXAG,omitempty"`
-	USDXAU json.Number `json:"USDXAU,omitempty"`
-	USDXCD json.Number `json:"USDXCD,omitempty"`
-	USDXDR json.Number `json:"USDXDR,omitempty"`
-	USDXOF json.Number `json:"USDXOF,omitempty"`
-	USDXPF json.Number `json:"USDXPF,omitempty"`
-	USDYER json.Number `json:"USDYER,omitempty"`
-	USDZAR json.Number `json:"USDZAR,omitempty"`
-	USDZMK json.Number `json:"USDZMK,omitempty"`
-	USDZMW json.Number `json:"USDZMW,omitempty"`
-	USDZWL json.Number `json:"USDZWL,omitempty"`
+	AED json.Number `json:"USDAED,omitempty" bson:"AED,omitempty"`
+	AFN json.Number `json:"USDAFN,omitempty" bson:"AFN,omitempty"`
+	ALL json.Number `json:"USDALL,omitempty" bson:"ALL,omitempty"`
+	AMD json.Number `json:"USDAMD,omitempty" bson:"AMD,omitempty"`
+	ANG json.Number `json:"USDANG,omitempty" bson:"ANG,omitempty"`
+	AOA json.Number `json:"USDAOA,omitempty" bson:"AOA,omitempty"`
+	ARS json.Number `json:"USDARS,omitempty" bson:"ARS,omitempty"`
+	AUD json.Number `json:"USDAUD,omitempty" bson:"AUD,omitempty"`
+	AWG json.Number `json:"USDAWG,omitempty" bson:"AWG,omitempty"`
+	AZN json.Number `json:"USDAZN,omitempty" bson:"AZN,omitempty"`
+	BAM json.Number `json:"USDBAM,omitempty" bson:"BAM,omitempty"`
+	BBD json.Number `json:"USDBBD,omitempty" bson:"BBD,omitempty"`
+	BDT json.Number `json:"USDBDT,omitempty" bson:"BDT,omitempty"`
+	BGN json.Number `json:"USDBGN,omitempty" bson:"BGN,omitempty"`
+	BHD json.Number `json:"USDBHD,omitempty" bson:"BHD,omitempty"`
+	BIF json.Number `json:"USDBIF,omitempty" bson:"BIF,omitempty"`
+	BMD json.Number `json:"USDBMD,omitempty" bson:"BMD,omitempty"`
+	BND json.Number `json:"USDBND,omitempty" bson:"BND,omitempty"`
+	BOB json.Number `json:"USDBOB,omitempty" bson:"BOB,omitempty"`
+	BRL json.Number `json:"USDBRL,omitempty" bson:"BRL,omitempty"`
+	BSD json.Number `json:"USDBSD,omitempty" bson:"BSD,omitempty"`
+	BTC json.Number `json:"USDBTC,omitempty" bson:"BTC,omitempty"`
+	BTN json.Number `json:"USDBTN,omitempty" bson:"BTN,omitempty"`
+	BWP json.Number `json:"USDBWP,omitempty" bson:"BWP,omitempty"`
+	BYN json.Number `json:"USDBYN,omitempty" bson:"BYN,omitempty"`
+	BYR json.Number `json:"USDBYR,omitempty" bson:"BYR,omitempty"`
+	BZD json.Number `json:"USDBZD,omitempty" bson:"BZD,omitempty"`
+	CAD json.Number `json:"USDCAD,omitempty" bson:"CAD,omitempty"`
+	CDF json.Number `json:"USDCDF,omitempty" bson:"CDF,omitempty"`
+	CHF json.Number `json:"USDCHF,omitempty" bson:"CHF,omitempty"`
+	CLF json.Number `json:"USDCLF,omitempty" bson:"CLF,omitempty"`
+	CLP json.Number `json:"USDCLP,omitempty" bson:"CLP,omitempty"`
+	CNY json.Number `json:"USDCNY,omitempty" bson:"CNY,omitempty"`
+	COP json.Number `json:"USDCOP,omitempty" bson:"COP,omitempty"`
+	CRC json.Number `json:"USDCRC,omitempty" bson:"CRC,omitempty"`
+	CUC json.Number `json:"USDCUC,omitempty" bson:"CUC,omitempty"`
+	CUP json.Number `json:"USDCUP,omitempty" bson:"CUP,omitempty"`
+	CVE json.Number `json:"USDCVE,omitempty" bson:"CVE,omitempty"`
+	CZK json.Number `json:"USDCZK,omitempty" bson:"CZK,omitempty"`
+	DJF json.Number `json:"USDDJF,omitempty" bson:"DJF,omitempty"`
+	DKK json.Number `json:"USDDKK,omitempty" bson:"DKK,omitempty"`
+	DOP json.Number `json:"USDDOP,omitempty" bson:"DOP,omitempty"`
+	DZD json.Number `json:"USDDZD,omitempty" bson:"DZD,omitempty"`
+	EGP json.Number `json:"USDEGP,omitempty" bson:"EGP,omitempty"`
+	ERN json.Number `json:"USDERN,omitempty" bson:"ERN,omitempty"`
+	ETB json.Number `json:"USDETB,omitempty" bson:"ETB,omitempty"`
+	EUR json.Number `json:"USDEUR,omitempty" bson:"EUR,omitempty"`
+	FJD json.Number `json:"USDFJD,omitempty" bson:"FJD,omitempty"`
+	FKP json.Number `json:"USDFKP,omitempty" bson:"FKP,omitempty"`
+	GBP json.Number `json:"USDGBP,omitempty" bson:"GBP,omitempty"`
+	GEL json.Number `json:"USDGEL,omitempty" bson:"GEL,omitempty"`
+	GGP json.Number `json:"USDGGP,omitempty" bson:"GGP,omitempty"`
+	GHS json.Number `json:"USDGHS,omitempty" bson:"GHS,omitempty"`
+	GIP json.Number `json:"USDGIP,omitempty" bson:"GIP,omitempty"`
+	GMD json.Number `json:"USDGMD,omitempty" bson:"GMD,omitempty"`
+	GNF json.Number `json:"USDGNF,omitempty" bson:"GNF,omitempty"`
+	GTQ json.Number `json:"USDGTQ,omitempty" bson:"GTQ,omitempty"`
+	GYD json.Number `json:"USDGYD,omitempty" bson:"GYD,omitempty"`
+	HKD json.Number `json:"USDHKD,omitempty" bson:"HKD,omitempty"`
+	HNL json.Number `json:"USDHNL,omitempty" bson:"HNL,omitempty"`
+	HRK json.Number `json:"USDHRK,omitempty" bson:"HRK,omitempty"`
+	HTG json.Number `json:"USDHTG,omitempty" bson:"HTG,omitempty"`
+	HUF json.Number `json:"USDHUF,omitempty" bson:"HUF,omitempty"`
+	IDR json.Number `json:"USDIDR,omitempty" bson:"IDR,omitempty"`
+	ILS json.Number `json:"USDILS,omitempty" bson:"ILS,omitempty"`
+	IMP json.Number `json:"USDIMP,omitempty" bson:"IMP,omitempty"`
+	INR json.Number `json:"USDINR,omitempty" bson:"INR,omitempty"`
+	IQD json.Number `json:"USDIQD,omitempty" bson:"IQD,omitempty"`
+	IRR json.Number `json:"USDIRR,omitempty" bson:"IRR,omitempty"`
+	ISK json.Number `json:"USDISK,omitempty" bson:"ISK,omitempty"`
+	JEP json.Number `json:"USDJEP,omitempty" bson:"JEP,omitempty"`
+	JMD json.Number `json:"USDJMD,omitempty" bson:"JMD,omitempty"`
+	JOD json.Number `json:"USDJOD,omitempty" bson:"JOD,omitempty"`
+	JPY json.Number `json:"USDJPY,omitempty" bson:"JPY,omitempty"`
+	KES json.Number `json:"USDKES,omitempty" bson:"KES,omitempty"`
+	KGS json.Number `json:"USDKGS,omitempty" bson:"KGS,omitempty"`
+	KHR json.Number `json:"USDKHR,omitempty" bson:"KHR,omitempty"`
+	KMF json.Number `json:"USDKMF,omitempty" bson:"KMF,omitempty"`
+	KPW json.Number `json:"USDKPW,omitempty" bson:"KPW,omitempty"`
+	KRW json.Number `json:"USDKRW,omitempty" bson:"KRW,omitempty"`
+	KWD json.Number `json:"USDKWD,omitempty" bson:"KWD,omitempty"`
+	KYD json.Number `json:"USDKYD,omitempty" bson:"KYD,omitempty"`
+	KZT json.Number `json:"USDKZT,omitempty" bson:"KZT,omitempty"`
+	LAK json.Number `json:"USDLAK,omitempty" bson:"LAK,omitempty"`
+	LBP json.Number `json:"USDLBP,omitempty" bson:"LBP,omitempty"`
+	LKR json.Number `json:"USDLKR,omitempty" bson:"LKR,omitempty"`
+	LRD json.Number `json:"USDLRD,omitempty" bson:"LRD,omitempty"`
+	LSL json.Number `json:"USDLSL,omitempty" bson:"LSL,omitempty"`
+	LTL json.Number `json:"USDLTL,omitempty" bson:"LTL,omitempty"`
+	LVL json.Number `json:"USDLVL,omitempty" bson:"LVL,omitempty"`
+	LYD json.Number `json:"USDLYD,omitempty" bson:"LYD,omitempty"`
+	MAD json.Number `json:"USDMAD,omitempty" bson:"MAD,omitempty"`
+	MDL json.Number `json:"USDMDL,omitempty" bson:"MDL,omitempty"`
+	MGA json.Number `json:"USDMGA,omitempty" bson:"MGA,omitempty"`
+	MKD json.Number `json:"USDMKD,omitempty" bson:"MKD,omitempty"`
+	MMK json.Number `json:"USDMMK,omitempty" bson:"MMK,omitempty"`
+	MNT json.Number `json:"USDMNT,omitempty" bson:"MNT,omitempty"`
+	MOP json.Number `json:"USDMOP,omitempty" bson:"MOP,omitempty"`
+	MRO json.Number `json:"USDMRO,omitempty" bson:"MRO,omitempty"`
+	MUR json.Number `json:"USDMUR,omitempty" bson:"MUR,omitempty"`
+	MVR json.Number `json:"USDMVR,omitempty" bson:"MVR,omitempty"`
+	MWK json.Number `json:"USDMWK,omitempty" bson:"MWK,omitempty"`
+	MXN json.Number `json:"USDMXN,omitempty" bson:"MXN,omitempty"`
+	MYR json.Number `json:"USDMYR,omitempty" bson:"MYR,omitempty"`
+	MZN json.Number `json:"USDMZN,omitempty" bson:"MZN,omitempty"`
+	NAD json.Number `json:"USDNAD,omitempty" bson:"NAD,omitempty"`
+	NGN json.Number `json:"USDNGN,omitempty" bson:"NGN,omitempty"`
+	NIO json.Number `json:"USDNIO,omitempty" bson:"NIO,omitempty"`
+	NOK json.Number `json:"USDNOK,omitempty" bson:"NOK,omitempty"`
+	NPR json.Number `json:"USDNPR,omitempty" bson:"NPR,omitempty"`
+	NZD json.Number `json:"USDNZD,omitempty" bson:"NZD,omitempty"`
+	OMR json.Number `json:"USDOMR,omitempty" bson:"OMR,omitempty"`
+	PAB json.Number `json:"USDPAB,omitempty" bson:"PAB,omitempty"`
+	PEN json.Number `json:"USDPEN,omitempty" bson:"PEN,omitempty"`
+	PGK json.Number `json:"USDPGK,omitempty" bson:"PGK,omitempty"`
+	PHP json.Number `json:"USDPHP,omitempty" bson:"PHP,omitempty"`
+	PKR json.Number `json:"USDPKR,omitempty" bson:"PKR,omitempty"`
+	PLN json.Number `json:"USDPLN,omitempty" bson:"PLN,omitempty"`
+	PYG json.Number `json:"USDPYG,omitempty" bson:"PYG,omitempty"`
+	QAR json.Number `json:"USDQAR,omitempty" bson:"QAR,omitempty"`
+	RON json.Number `json:"USDRON,omitempty" bson:"RON,omitempty"`
+	RSD json.Number `json:"USDRSD,omitempty" bson:"RSD,omitempty"`
+	RUB json.Number `json:"USDRUB,omitempty" bson:"RUB,omitempty"`
+	RWF json.Number `json:"USDRWF,omitempty" bson:"RWF,omitempty"`
+	SAR json.Number `json:"USDSAR,omitempty" bson:"SAR,omitempty"`
+	SBD json.Number `json:"USDSBD,omitempty" bson:"SBD,omitempty"`
+	SCR json.Number `json:"USDSCR,omitempty" bson:"SCR,omitempty"`
+	SDG json.Number `json:"USDSDG,omitempty" bson:"SDG,omitempty"`
+	SEK json.Number `json:"USDSEK,omitempty" bson:"SEK,omitempty"`
+	SGD json.Number `json:"USDSGD,omitempty" bson:"SGD,omitempty"`
+	SHP json.Number `json:"USDSHP,omitempty" bson:"SHP,omitempty"`
+	SLL json.Number `json:"USDSLL,omitempty" bson:"SLL,omitempty"`
+	SOS json.Number `json:"USDSOS,omitempty" bson:"SOS,omitempty"`
+	SRD json.Number `json:"USDSRD,omitempty" bson:"SRD,omitempty"`
+	STD json.Number `json:"USDSTD,omitempty" bson:"STD,omitempty"`
+	SVC json.Number `json:"USDSVC,omitempty" bson:"SVC,omitempty"`
+	SYP json.Number `json:"USDSYP,omitempty" bson:"SYP,omitempty"`
+	SZL json.Number `json:"USDSZL,omitempty" bson:"SZL,omitempty"`
+	THB json.Number `json:"USDTHB,omitempty" bson:"THB,omitempty"`
+	TJS json.Number `json:"USDTJS,omitempty" bson:"TJS,omitempty"`
+	TMT json.Number `json:"USDTMT,omitempty" bson:"TMT,omitempty"`
+	TND json.Number `json:"USDTND,omitempty" bson:"TND,omitempty"`
+	TOP json.Number `json:"USDTOP,omitempty" bson:"TOP,omitempty"`
+	TRY json.Number `json:"USDTRY,omitempty" bson:"TRY,omitempty"`
+	TTD json.Number `json:"USDTTD,omitempty" bson:"TTD,omitempty"`
+	TWD json.Number `json:"USDTWD,omitempty" bson:"TWD,omitempty"`
+	TZS json.Number `json:"USDTZS,omitempty" bson:"TZS,omitempty"`
+	UAH json.Number `json:"USDUAH,omitempty" bson:"UAH,omitempty"`
+	UGX json.Number `json:"USDUGX,omitempty" bson:"UGX,omitempty"`
+	USD json.Number `json:"USDUSD,omitempty" bson:"USD,omitempty"`
+	UYU json.Number `json:"USDUYU,omitempty" bson:"UYU,omitempty"`
+	UZS json.Number `json:"USDUZS,omitempty" bson:"UZS,omitempty"`
+	VEF json.Number `json:"USDVEF,omitempty" bson:"VEF,omitempty"`
+	VND json.Number `json:"USDVND,omitempty" bson:"VND,omitempty"`
+	VUV json.Number `json:"USDVUV,omitempty" bson:"VUV,omitempty"`
+	WST json.Number `json:"USDWST,omitempty" bson:"WST,omitempty"`
+	XAF json.Number `json:"USDXAF,omitempty" bson:"XAF,omitempty"`
+	XAG json.Number `json:"USDXAG,omitempty" bson:"XAG,omitempty"`
+	XAU json.Number `json:"USDXAU,omitempty" bson:"XAU,omitempty"`
+	XCD json.Number `json:"USDXCD,omitempty" bson:"SCD,omitempty"`
+	XDR json.Number `json:"USDXDR,omitempty" bson:"XDR,omitempty"`
+	XOF json.Number `json:"USDXOF,omitempty" bson:"XOF,omitempty"`
+	XPF json.Number `json:"USDXPF,omitempty" bson:"XPF,omitempty"`
+	YER json.Number `json:"USDYER,omitempty" bson:"YER,omitempty"`
+	ZAR json.Number `json:"USDZAR,omitempty" bson:"ZAR,omitempty"`
+	ZMK json.Number `json:"USDZMK,omitempty" bson:"ZMK,omitempty"`
+	ZMW json.Number `json:"USDZMW,omitempty" bson:"ZMW,omitempty"`
+	ZWL json.Number `json:"USDZWL,omitempty" bson:"ZWL,omitempty"`
 }
 
 type Currency struct {
+	ID bson.ObjectId `bson:"_id"`
 	Quotes Quotes `json:"quotes"`
-	Source string `json:"source"`
+	Source string `json:"source" bson:"name"`
+	DateCreation time.Time `bson:"name"`
 }

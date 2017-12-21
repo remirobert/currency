@@ -17,7 +17,7 @@ type NetworkCurrencyProvider struct {
 	requester JSONRequester
 }
 
-func (c *NetworkCurrencyProvider ) GetCurrency() (*Currency, error) {
+func (c *NetworkCurrencyProvider) GetCurrency() (*Currency, error) {
 	url := endpoint + accessKey
 	body, err := c.requester.Get(url)
 	if err != nil {
@@ -32,13 +32,13 @@ func (c *NetworkCurrencyProvider ) GetCurrency() (*Currency, error) {
 }
 
 func NewNetworkCurrencyProvider(requester JSONRequester) *NetworkCurrencyProvider {
-	return &NetworkCurrencyProvider {
+	return &NetworkCurrencyProvider{
 		requester: requester,
 	}
 }
 
 func NewCurrencyProvider() CurrencyProvider {
-	return &NetworkCurrencyProvider {
+	return &NetworkCurrencyProvider{
 		requester: DefaultRequester(),
 	}
 }
