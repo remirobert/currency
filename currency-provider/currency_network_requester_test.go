@@ -35,7 +35,8 @@ func (t *testNetworkClient) Get(url string) (resp *http.Response, err error) {
 
 func TestNetworkRequesterWithError(t *testing.T) {
 	testErr := errors.New("error")
-	requester := NetworkRequester{Client: &testNetworkClient{err: testErr}}
+	testNetClient := &testNetworkClient{err:testErr}
+	requester := NetworkRequester{Client: testNetClient}
 	bytes, err := requester.Get("")
 
 	assert.NotNil(t, err)
